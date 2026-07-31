@@ -35,3 +35,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Z-Direction 3D Cube Rotation Keyframes */
+@keyframes spinCubeZ {
+  0% {
+    transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes progressSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

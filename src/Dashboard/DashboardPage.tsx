@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NetRevenueCard from "./NetRevenueCard";
 import ChannelSalesCard from "./ChannelSalesCard";
 import TotalOrdersCard from "./TotalOrdersCard";
+import IsometricLoader from "./IsometricLoader";
 import {
   LayoutDashboard,
   BarChart3,
@@ -27,10 +28,26 @@ import {
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const [isPageLoading, setIsPageLoading] = useState(true);
+
+  // 5-Second Loading Animation on Reload
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isPageLoading]);
+
+  const handleManualReload = () => {
+    setIsPageLoading(true);
+  };
 
   return (
     <div className="fixed inset-0 h-screen w-screen bg-[#09090b] text-zinc-50 font-sans select-none overflow-hidden flex">
-      {/* 1. Left Sidebar (Viewport Fit) */}
+      {/* 5-SECOND ISOMETRIC 3D LOADING OVERLAY */}
+      {isPageLoading && <IsometricLoader text="Loading Dashboard Data..." />}
+
+      {/* 1. Left Sidebar */}
       <aside className="w-52 bg-[#09090b] border-r border-zinc-800/80 p-3 flex flex-col justify-between flex-shrink-0 h-full">
         <div>
           {/* Top Sidebar Action Icons */}
@@ -38,7 +55,11 @@ export default function DashboardPage() {
             <button className="p-1 rounded-md hover:bg-zinc-800/80 hover:text-zinc-100 transition-colors">
               <Sun className="h-3.5 w-3.5" />
             </button>
-            <button className="p-1 rounded-md hover:bg-zinc-800/80 hover:text-zinc-100 transition-colors">
+            <button
+              onClick={handleManualReload}
+              title="Reload Dashboard (5s Loader)"
+              className="p-1 rounded-md hover:bg-zinc-800/80 hover:text-zinc-100 transition-colors"
+            >
               <RotateCw className="h-3.5 w-3.5" />
             </button>
           </div>
@@ -165,7 +186,7 @@ export default function DashboardPage() {
         </div>
       </aside>
 
-      {/* 2. Main Right Content Panel (Fits 100% into Viewport with 0 Vertical Scrollbars) */}
+      {/* 2. Main Right Content Panel */}
       <main className="flex-1 flex flex-col min-w-0 bg-[#09090b] h-full overflow-hidden">
         {/* Top Header Bar */}
         <header className="flex items-center justify-between px-4 py-2 border-b border-zinc-800/80 bg-[#09090b]/90 flex-shrink-0">
@@ -178,6 +199,15 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-2 text-zinc-400">
+            <button
+              onClick={handleManualReload}
+              title="Test 5s Isometric Loader"
+              className="p-1.5 rounded-lg hover:bg-zinc-800/80 hover:text-zinc-100 transition-colors flex items-center gap-1 text-xs text-zinc-300 border border-zinc-800"
+            >
+              <RotateCw className="h-3.5 w-3.5" />
+              <span>Reload (5s)</span>
+            </button>
+
             <button className="p-1.5 rounded-lg hover:bg-zinc-800/80 hover:text-zinc-100 transition-colors">
               <Send className="h-3.5 w-3.5" />
             </button>
