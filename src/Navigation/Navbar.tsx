@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Home, Rss, BookOpen, LucideIcon } from "lucide-react";
+import { Home, Rss, BookOpen, Layers, LucideIcon } from "lucide-react";
 
 export interface NavItem {
   id: string;
@@ -17,6 +17,7 @@ interface NavbarProps {
 
 const defaultNavItems: NavItem[] = [
   { id: "home", label: "Home", icon: Home },
+  { id: "components", label: "Components Test", icon: Layers },
   { id: "blog", label: "Blog", icon: Rss },
   { id: "docs", label: "Docs", icon: BookOpen },
 ];
