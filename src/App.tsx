@@ -4,19 +4,30 @@ import NotFoundPage from "@/NotFound/NotFoundPage";
 import Navbar from "@/Navigation/Navbar";
 import Sidebar from "@/Sidebar/Sidebar";
 import EmployeeList from "@/List/EmployeeList";
+import DashboardPage from "@/Dashboard/DashboardPage";
 
 export default function App() {
-  const [view, setView] = useState<"list" | "sidebar" | "navbar" | "auth" | "404">("list");
+  const [view, setView] = useState<"dashboard" | "list" | "sidebar" | "navbar" | "auth" | "404">("dashboard");
   const [activeNavTab, setActiveNavTab] = useState("home");
 
   return (
     <div className="relative min-h-screen bg-zinc-950 text-zinc-50 font-sans p-2 sm:p-6">
       {/* Top Preview Switcher Bar */}
-      <div className="fixed top-3 right-3 z-50 flex items-center gap-1.5 bg-zinc-900/95 border border-zinc-800 rounded-full px-3 py-1.5 text-xs shadow-2xl backdrop-blur">
-        <span className="text-zinc-400 font-medium mr-1">Preview Page:</span>
+      <div className="fixed top-3 right-3 z-50 flex items-center gap-1.5 bg-zinc-900/95 border border-zinc-800 rounded-full px-3 py-1.5 text-xs shadow-2xl backdrop-blur max-w-full overflow-x-auto">
+        <span className="text-zinc-400 font-medium mr-1 whitespace-nowrap">Preview Page:</span>
+        <button
+          onClick={() => setView("dashboard")}
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
+            view === "dashboard"
+              ? "bg-zinc-100 text-zinc-950 font-semibold"
+              : "text-zinc-400 hover:text-zinc-200"
+          }`}
+        >
+          Dashboard Page
+        </button>
         <button
           onClick={() => setView("list")}
-          className={`px-2.5 py-1 rounded-full font-medium transition-colors ${
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
             view === "list"
               ? "bg-zinc-100 text-zinc-950 font-semibold"
               : "text-zinc-400 hover:text-zinc-200"
@@ -26,7 +37,7 @@ export default function App() {
         </button>
         <button
           onClick={() => setView("sidebar")}
-          className={`px-2.5 py-1 rounded-full font-medium transition-colors ${
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
             view === "sidebar"
               ? "bg-zinc-100 text-zinc-950 font-semibold"
               : "text-zinc-400 hover:text-zinc-200"
@@ -36,7 +47,7 @@ export default function App() {
         </button>
         <button
           onClick={() => setView("navbar")}
-          className={`px-2.5 py-1 rounded-full font-medium transition-colors ${
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
             view === "navbar"
               ? "bg-zinc-100 text-zinc-950 font-semibold"
               : "text-zinc-400 hover:text-zinc-200"
@@ -46,7 +57,7 @@ export default function App() {
         </button>
         <button
           onClick={() => setView("auth")}
-          className={`px-2.5 py-1 rounded-full font-medium transition-colors ${
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
             view === "auth"
               ? "bg-zinc-100 text-zinc-950 font-semibold"
               : "text-zinc-400 hover:text-zinc-200"
@@ -56,7 +67,7 @@ export default function App() {
         </button>
         <button
           onClick={() => setView("404")}
-          className={`px-2.5 py-1 rounded-full font-medium transition-colors ${
+          className={`px-2.5 py-1 rounded-full font-medium transition-colors whitespace-nowrap ${
             view === "404"
               ? "bg-zinc-100 text-zinc-950 font-semibold"
               : "text-zinc-400 hover:text-zinc-200"
@@ -66,21 +77,28 @@ export default function App() {
         </button>
       </div>
 
-      {/* 1. LIST COMPONENT PREVIEW */}
+      {/* 1. DASHBOARD PAGE PREVIEW */}
+      {view === "dashboard" && (
+        <div className="w-full pt-12 sm:pt-14">
+          <DashboardPage />
+        </div>
+      )}
+
+      {/* 2. LIST COMPONENT PREVIEW */}
       {view === "list" && (
         <div className="w-full pt-10 sm:pt-12 max-w-7xl mx-auto">
           <EmployeeList />
         </div>
       )}
 
-      {/* 2. SIDEBAR PREVIEW */}
+      {/* 3. SIDEBAR PREVIEW */}
       {view === "sidebar" && (
         <div className="w-full pt-10 sm:pt-12">
           <Sidebar />
         </div>
       )}
 
-      {/* 3. NAVBAR PREVIEW */}
+      {/* 4. NAVBAR PREVIEW */}
       {view === "navbar" && (
         <div className="w-full pt-10">
           <Navbar
@@ -90,14 +108,14 @@ export default function App() {
         </div>
       )}
 
-      {/* 4. AUTH PAGES PREVIEW */}
+      {/* 5. AUTH PAGES PREVIEW */}
       {view === "auth" && <AuthContainer initialMode="login" />}
 
-      {/* 5. 404 PAGE PREVIEW */}
+      {/* 6. 404 PAGE PREVIEW */}
       {view === "404" && (
         <NotFoundPage
           onGoHome={() => setView("auth")}
-          onExplore={() => setView("list")}
+          onExplore={() => setView("dashboard")}
         />
       )}
     </div>
